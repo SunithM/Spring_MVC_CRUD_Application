@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="com.suni.springdemo.util.SortUtils"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,11 +23,28 @@
 					onclick="window.location.href='showFormForAdd'; return false;"
 					class="add-button" />
 				<!-- add html table -->
+
+				<!-- construct a sort link for first name -->
+				<c:url var="sortLinkForFirstName" value="/customer/list">
+					<c:param name="sort"
+						value="<%=Integer.toString(SortUtils.FIRST_NAME) %>"/>
+				</c:url>
+
+				<c:url var="sortLinkForLastName" value="/customer/list">
+					<c:param name="sort"
+						value="<%=Integer.toString(SortUtils.LAST_NAME) %>"/>
+				</c:url>
+				<c:url var="sortLinkForEmail" value="/customer/list">
+					<c:param name="sort"
+						value="<%=Integer.toString(SortUtils.EMAIL)%>"/>
+				</c:url>
+
+
 				<table>
 					<tr>
-						<th>First Name</th>
-						<th>Last Name</th>
-						<th>Email</th>
+						<th><a href="${sortLinkForFirstName}"> First Name </a></th>
+						<th><a href="${sortLinkForLastName}"> Last Name </a></th>
+						<th><a href="${sortLinkForEmail}"> Email</a></th>
 						<th>Action</th>
 					</tr>
 

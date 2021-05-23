@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.suni.springdemo.entity.Customer;
 import com.suni.springdemo.service.CustomerService;
+import com.suni.springdemo.util.SortUtils;
 
 @Controller
 @RequestMapping("/customer")
@@ -24,13 +25,22 @@ public class CustomerController {
 	
 	
 	@GetMapping("/list")
-	public String listCustomers(Model theModel) {
+	public String listCustomers(Model theModel,@RequestParam(required=false) String sort) {
 		
 		//get the customer from service
-		List<Customer> theCustomer=customerService.getCustomers();
+		List<Customer> theCustomers=null;
 		
+		if(sort != null) {
+			int theSort=Integer.parseInt(sort);
+			//sort based on param value
+			theCustomers=customerService.getCustomers(theSort);
+		}
+		else {
+			//default sort will be by first name
+			theCustomers=customerService.getCustomers(SortUtils.FIRST_NAME);
+		}
 		//add the customer to model
-		theModel.addAttribute("customers",theCustomer);
+		theModel.addAttribute("customers",theCustomers);
 		
 		
 		
